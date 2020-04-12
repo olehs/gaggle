@@ -1,6 +1,6 @@
 var EventEmitter = require('events').EventEmitter
   , util = require('util')
-  , Joi = require('joi')
+  , Joi = require('@hapi/joi')
   , _ = require('lodash')
   , prettifyJoiError = require('../helpers/prettify-joi-error')
 
@@ -35,24 +35,25 @@ var EventEmitter = require('events').EventEmitter
 function ChannelInterface (opts) {
   EventEmitter.call(this)
 
-  var validatedOptions = Joi.validate(opts || {}, Joi.object().keys({
-    id: Joi.string()
-  , logFunction: Joi.func().default(function noop () {})
+  var schema = Joi.object().keys({
+    id: Joi.string().required()
+  , logFunction: Joi.function().default(() => {})
   , channelOptions: Joi.object()
-  }).requiredKeys('id'))
+  })
 
+  var validatedOptions = schema.validate(opts || {});
   if (validatedOptions.error != null) {
     throw new Error(prettifyJoiError(validatedOptions.error))
   }
 
   this.id = validatedOptions.value.id
+  this._logFunction = () => {} // console.error // validatedOptions.value.logFunction
 
   this.state = {
     connected: false
   , isReconnecting: false
   }
 
-  this._logFunction = validatedOptions.value.logFunction
 
   // Avoid duplicate messages
   this._lastRecievedMap = {}
