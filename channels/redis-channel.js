@@ -1,5 +1,5 @@
 var ChannelInterface = require('./channel-interface')
-  , Joi = require('joi')
+  , Joi = require('@hapi/joi')
   , prettifyJoiError = require('../helpers/prettify-joi-error')
   , redis = require('redis')
   , util = require('util')
@@ -10,19 +10,18 @@ var ChannelInterface = require('./channel-interface')
 */
 
 function RedisChannel (opts) {
-  var validatedOptions = Joi.validate(opts || {}, Joi.object().keys({
+  var schema = Joi.object().keys({
         channelOptions: Joi.object().keys({
           connectionString: Joi.string()
         , channelName: Joi.string()
-        })
-      , logFunction: Joi.func()
-      , id: Joi.string()
-      }).requiredKeys('channelOptions', 'channelOptions.channelName'), {
-        convert: false
+        }).required()
+      , logFunction: Joi.function()
+      , id: Joi.string().required()
       })
 
   ChannelInterface.apply(this, Array.prototype.slice.call(arguments))
 
+  var validatedOptions = schema.validate(opts || {})
   if (validatedOptions.error != null) {
     throw new Error(prettifyJoiError(validatedOptions.error))
   }
