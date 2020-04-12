@@ -117,7 +117,7 @@ t.test('leader election - elects exactly one leader when no process fails', func
       id: uuid.v4()
     , clusterSize: CLUSTER_SIZE
     , channel: {
-        name: 'redis'
+        name: 'memory'
       , channelName: 'leaderConsensusTest'
       }
     }))
@@ -180,7 +180,7 @@ t.test('leader election - re-elects a leader when a leader fails', function (t) 
       id: uuid.v4()
     , clusterSize: CLUSTER_SIZE
     , channel: {
-        name: 'redis'
+        name: 'memory'
       , channelName: 'leaderReelectionTest'
       }
     }))
