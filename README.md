@@ -1,5 +1,7 @@
 # Gaggle [![Build Status](https://img.shields.io/circleci/project/ben-ng/gaggle/master.svg)](https://circleci.com/gh/ben-ng/gaggle/tree/master) [![Coverage Status](https://img.shields.io/coveralls/ben-ng/gaggle/master.svg)](https://coveralls.io/github/ben-ng/gaggle?branch=master) [![npm version](https://img.shields.io/npm/v/gaggle.svg)](https://www.npmjs.com/package/gaggle)
 
+**Note:** coded originally by @ben-ng, he now seems to be absent from github so here's an updated fork...
+
 Gaggle is a [Raft](http://raft.github.io) implementation that focuses on ease of use.
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
